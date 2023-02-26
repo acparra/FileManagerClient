@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> File manager </title>
+
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+</head>
+
+<body>
+    <main class="main">
+        <div class="content">
+            <div class="content__form">
+                <form action="" class="content__form__form">
+                    <div class="form__group">
+                        <label for="dropAreaPath" class="form__group__label"> Path </label>
+                        <input type="text" name="dropAreaPath" id="dropAreaPath" class="form__group__input"
+                            placeholder="Path.." autocomplete="off" readonly>
+                    </div>
+                    <div class="form__group drop__area" id="dropArea">
+                        <h2 class="drop__area__text" id="dropAreaText"> DROP FILES HERE
+                            </br> OR </h2>
+                        <label for="dropAreaInput" class="drop__area__label button" id="dropAreaLabel" role="button"> CHOOSE
+                            FILES </label>
+                        <input type="file" name="dropAreaInput" id="dropAreaInput" class="drop__area__input" multiple>
+                        <div class="drop__area__content" id="dropAreaContent">
+                        </div>
+                    </div>
+                    <input type="submit" value="UPLOAD" class="form__submit button " id="dropAreaSubmit">
+                </form>
+            </div>
+            <div class="content__directory" id="contentDirectory">
+            </div>
+        </div>
+    </main>
+    <script src="https://kit.fontawesome.com/e475ef8d4e.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script src="./js/drag.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/services.js"></script>
+</body>
+
+</html>
