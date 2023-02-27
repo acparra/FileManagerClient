@@ -57,8 +57,6 @@ dropAreaPath.addEventListener("blur", () => {
     getElements()
 })
 
-dropAreaPath.addEventListener("keyup", (e)=> console.log(e))
-
 async function uploadFiles(e) {
     e.preventDefault()
     if (typeof files != "object"){
