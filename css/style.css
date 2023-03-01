@@ -47,7 +47,7 @@
     gap: 1rem;
 }
 
-.content__form{
+.content__form {
     width: 100%;
     height: 100%;
     display: flex;
@@ -69,7 +69,7 @@
     width: 100%;
 }
 
-.form__group{
+.form__group {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -85,6 +85,7 @@
 
 .drop__area {
     display: flex;
+    min-height: 200px;
     justify-content: center;
     align-items: center;
     border: 1px solid #fff;
@@ -103,7 +104,7 @@
     display: none;
 }
 
-.drop__area__content{
+.drop__area__content {
     width: 100%;
     overflow-y: auto;
     display: flex;
@@ -116,7 +117,6 @@
 .content__file {
     width: 100%;
     display: flex;
-    align-items: center;
 }
 
 .content__file__icon {
@@ -159,7 +159,8 @@
     cursor: pointer;
 }
 
-#elementReturn, #elementNewFolder {
+#elementReturn,
+#elementNewFolder {
     cursor: pointer;
 }
 
@@ -187,14 +188,16 @@
 
 
 @media (min-width: 512px) {
-    .content{
+    .content {
         max-height: 800px;
     }
+
     .main {
         height: 100vh;
     }
+
     .drop__area__content {
         max-height: 200px;
     }
-    
+
 }

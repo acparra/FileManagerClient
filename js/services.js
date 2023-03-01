@@ -1,4 +1,4 @@
-const baseUrl = "https://localhost:7189/api/file";
+const baseUrl = "https://localhost:7189/api";
 
 async function uploadFileAsync(file) {
 
@@ -7,7 +7,7 @@ async function uploadFileAsync(file) {
     data.append("Path", path);
     data.append("File", file);
 
-    let request = await fetch(`${baseUrl}/upload`, {
+    let request = await fetch(`${baseUrl}/file/upload`, {
         method: "POST",
         body: data
     })
@@ -17,14 +17,20 @@ async function uploadFileAsync(file) {
     return response
 }
 
+async function getExtensionsAsync () {
+    let request = await fetch(`${baseUrl}/file/extensions`)
+    let response = await request.json();
+    return response
+}
+
 async function getElementsAsync() {
-    let request = await fetch(`${baseUrl}/content?path=${currentLocation}`)
+    let request = await fetch(`${baseUrl}/folder?path=${currentLocation}`)
     let response = await request.json();
     return response
 }
 
 async function deleteFileAsync(file) {
-    let request = await fetch(`${baseUrl}?path=${file}`, {
+    let request = await fetch(`${baseUrl}/file?path=${file}`, {
         method: "DELETE"
     })
     let response = await request.json()

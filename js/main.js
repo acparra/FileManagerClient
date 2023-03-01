@@ -11,6 +11,7 @@ const extensionsIcons = {
 }
 
 let files;
+let allowedExtensions;
 let currentLocation = ""
 
 function processFiles() {
@@ -23,7 +24,7 @@ function processFiles() {
 
         let contentFileIcon = document.createElement("i")
         let fileExtension = file.name.slice(file.name.lastIndexOf("."))
-        contentFileIcon.classList.add("content__file__icon","fa-solid", extensionsIcons[fileExtension] ? extensionsIcons[fileExtension] : extensionsIcons["default"])
+        contentFileIcon.classList.add("content__file__icon", "fa-solid", extensionsIcons[fileExtension] ? extensionsIcons[fileExtension] : extensionsIcons["default"])
         contentFile.appendChild(contentFileIcon)
 
         let contentFileName = document.createElement("p")
@@ -41,17 +42,29 @@ function changeInputFiles(e) {
 }
 dropAreaInput.addEventListener("change", (e) => changeInputFiles(e))
 
-async function getElements() {
-    let response = await getElementsAsync()
-    if (response.status != "success") {
-        alertify.error("Error while retreiving data")
-        return
-    }
-
-    renderElementReturn()
-    renderElements(response.data.files, "file")
-    renderElements(response.data.folders, "folder")
+async function getExtensions () {
+    let response = await getExtensionsAsync();
+    allowedExtensions = response.data.map(e => `.${e}`)
+    dropAreaInput.accept = allowedExtensions.join(",")
 }
+
+async function getElements() {
+    try {
+        let response = await getElementsAsync()
+        if (response.status != "success") {
+            alertify.error("Error while retreiving data")
+            return
+        }
+
+        renderElementReturn()
+        renderElements(response.data.files, "file")
+        renderElements(response.data.folders, "folder")
+    }
+    catch (ex) {
+        alertify.error("Error while fetching API")
+    }
+}
+
 dropAreaPath.addEventListener("blur", () => {
     currentLocation = dropAreaPath.value;
     getElements()
@@ -59,15 +72,15 @@ dropAreaPath.addEventListener("blur", () => {
 
 async function uploadFiles(e) {
     e.preventDefault()
-    if (typeof files != "object"){
+    if (typeof files != "object") {
         alertify.error(`Something is wrong`)
         return
     }
-    
+
     for (const file of files) {
         let response = await uploadFileAsync(file)
         if (response.status != "success")
-            alertify.error(`Error uploading file ${file.name}`)
+            alertify.error(`${response.message}`)
         else
             alertify.success(`File ${file.name} uploaded successfully`)
     }
@@ -117,7 +130,7 @@ function renderElements(elements, type) {
         directoryElement.innerHTML = `<i class="fa-solid fa-${type} element__icon"></i>`
 
         let directoryElementOpen = document.createElement("a")
-        directoryElementOpen.href = type == "file" ? element : "javascript:void(0)"
+        directoryElementOpen.href = type == "file" ? `${baseUrl}/file/download?path=${element}` : "javascript:void(0)"
         directoryElementOpen.classList.add("element__name")
         directoryElementOpen.id = `${id}Open`
         directoryElementOpen.textContent = text
@@ -200,6 +213,7 @@ function renderElementReturn() {
 
 window.onload = async () => {
     await getElements()
+    await getExtensions()
 }
 
 // DISABLE DEFAULT BEHAVIOR
